@@ -2,7 +2,7 @@
 
 use App\Bookable;
 use App\Booking;
-use App\Http\Controllers\Api\BookableController;
+// use App\Http\Controllers\Api\BookableController;
 use Illuminate\Database\Seeder;
 
 class BookingsTableSeeder extends Seeder

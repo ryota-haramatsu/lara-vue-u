@@ -1,3 +1,33 @@
+
+# lara-vue-u
+## 51. Seeding bookings (generating random, non overlapping time series)
+model factoryを作成 ```php artisan make:factory BookingFactroy```  
+### BookingFactory.phpを編集
+- Carbon::instance($faker->dateTimeBetween('-1 months', '+1 months'));
+- (clone 変数)でオブジェクトのクローンを作成(参照: https://www.php.net/manual/ja/language.oop5.cloning.php)
+- $to変数にはclonした$from変数+addDays(random_int(0.14));とする
+- returnで$fromとtoを返す
+### BookingsTableSeeder.phpを編集
+```php artisan make:seeder BookingsTableSeeder```
+- DatabaseSeederにcallすることを忘れない
+- Bookingクラスをfactoryし、それをmake()で作成したものを$booking変数に代入
+- $bookings変数にはcollect()に配列の$bookig変数を入れる 
+- ループでfromとtoを作成
+- Booking::make([ // ])では$booking = new Booking()でインスタンスを作成し、$booking->from = $fromとしてインスタンスを作成することと同じ。
+- $bookings->push($booking)で配列に追加。bookableモデルのbookings()からsaveMany()で$bookingsを保存
+- saveMany()について(参照: https://readouble.com/laravel/5.8/ja/eloquent-relationships.html#Save%E3%83%A1%E3%82%BD%E3%83%83%E3%83%89)
+- マスアサインメント機能がデフォルトで有効になっているDBにデータを挿入するためにはモデルにカラムの宣言をする(protected $fillable=['カラム名'];)
+- 最後に```php artisan migrate:refresh --seeder```を実行
+
+## 52. Single Action Controller
+シングルアクションコントローラ(参照: https://readouble.com/laravel/5.7/ja/controllers.html#single-action-controllers)
+```php artisan make:controller Api/BookableAvailabilityController --invokable```
+- invokable=呼び出し可能 という意味
+- なぜかrouteを記述後に上の生成コマンドを入力するとエラーが出るので、コマンド→route記述をするとOK
+
+
+
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
@@ -72,4 +102,4 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# lara-vue-u
+
