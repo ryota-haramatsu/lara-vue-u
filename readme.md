@@ -25,7 +25,27 @@ model factoryを作成 ```php artisan make:factory BookingFactroy```
 - invokable=呼び出し可能 という意味
 - なぜかrouteを記述後に上の生成コマンドを入力するとエラーが出るので、コマンド→route記述をするとOK
 
+## 53. Request input validation (validating data clients send to our server)
+バリデーション
+BookableAvailabilityController.phpを編集
+- HeadersでjsonをAcceptするとpostmanがエラー
+```
+killall Postman
+NODE_OPTIONS=--max-http-header-size=40960 /Applications/Postman.app/Contents/MacOS/Postman
+```
 
+54. Eloquent Local Query Scopes
+Bookingモデル
+Scope
+- scopeを先頭につけてモデルにメソッドを定義することで、なんども使用する同じ条件の検索クエリを管理することができる。
+
+56. Getting object availability in Vue.js
+Availability.vueを編集
+- routerで定義したpathをthis.$route.params.XXとして利用可能
+- apiの前に/を入れないとpathが変わってしまうので注意
+`/api/bookables/${this.$route.params.id}/availability?from=${this.from}&to=${this.to}`
+
+57. Displaying form errors
 
 
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
